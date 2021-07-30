@@ -1,0 +1,77 @@
+<section class="hero is-large" style="background-color: darkturquoise; min-height: 100%;">
+    <div class="box caja">
+        <div class="content has-text-centered">
+            <p class="title">
+                Verduleria El Purete
+            </p>
+            <p *ngIf="hayDeuda" class="subtitle">
+                Confirma tu compra
+            </p>
+            <p *ngIf="!hayDeuda" class="subtitle">
+                PAGADO
+            </p>
+
+            <div class="columns">
+                <div class="column">
+                    <strong>Nombre:</strong> {{pedido.nombre}}
+                </div>
+                <div class="column">
+                    <strong>CI:</strong> {{pedido.ci}}
+                </div>
+                <div class="column">
+                    <strong>Fecha:</strong> {{pedido.fecha}}
+                </div>
+            </div>
+
+            <table class="table" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Total</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>{{getTotalCost()}}</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <tr *ngFor="let item of pedido.detalle; let i = index">
+                    <th>{{i + 1}}</th>
+                    <td>{{item.producto}}</td>
+                    <td>{{item.precio}}</td>
+                    <td>{{item.cantidad}}</td>
+                    <td>{{(item.cantidad || 0) * (item.precio || 0)}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="columns">
+                <div class="column">
+                    <div *ngIf="hayDeuda" class="button is-success is-fullwidth" (click)="confirmar()">
+                        Confirmar
+                    </div>
+                    <div *ngIf="!hayDeuda" class="button is-success is-fullwidth" (click)="verPago()">
+                        Ver Pago
+                    </div>
+                </div>
+                <div class="column">
+                    <div *ngIf="hayDeuda" class="button is-danger is-fullwidth is-outlined" (click)="cancelar()">
+                        Cancelar
+                    </div>
+                    <div *ngIf="!hayDeuda" class="button is-danger is-fullwidth is-outlined" (click)="cancelar()">
+                        Cerrar
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>

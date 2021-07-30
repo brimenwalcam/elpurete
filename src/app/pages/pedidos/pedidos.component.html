@@ -1,0 +1,194 @@
+
+<section class="hero is-large" style="background-color: darkturquoise; min-height: 100%;">
+    <div class="hero-head has-text-centered" style="padding: 20px;">
+      <p class="title is-1">
+        EL PURETE
+      </p>
+      <p class="subtitle">
+        Fruteria y Verduleria
+      </p>
+    </div>
+  
+    <div class="columns" style="margin-top: 15px;">
+      <div class="column is-10 is-offset-1 has-text-centered">
+        <p class="title is-4" style="height: 33px; background-color: darkseagreen; margin-bottom: 0px; color: white;"> Realiza tu pedido</p>
+        <div class="box">
+          
+          <form [formGroup]="pedidosForm" (ngSubmit)="agregar()">
+            
+              <div class="container has-text-centered">
+                <div class="columns" style="background-color: whitesmoke;">
+                  <div class="column is-4">
+    
+                    <div class="field is-horizontal">
+                      <div class="field-label is-normal">
+                        <label class="label">Nombre:</label>
+                      </div>
+                      <div class="field-body">
+                        <div class="field">
+                          <p class="control">
+                            <input class="input" type="text" formControlName="nombre" required>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+    
+                  </div>
+                  <div class="column is-4">
+    
+                    <div class="field is-horizontal">
+                      <div class="field-label is-normal">
+                        <label class="label">CI:</label>
+                      </div>
+                      <div class="field-body">
+                        <div class="field">
+                          <p class="control">
+                            <input class="input" type="tel" formControlName="ci" required>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+    
+                  </div>
+                  <div class="column is-4">
+    
+                    <div class="field is-horizontal">
+                      <div class="field-label is-normal">
+                        <label class="label">Fecha:</label>
+                      </div>
+                      <div class="field-body">
+                        <div class="field">
+                          <p class="control">
+                            <input style="background-color: rgb(214, 214, 214);" class="input" type="text" formControlName="fecha" readonly>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+    
+                  </div>
+                </div>
+                
+                <div class="columns">
+                  <div class="column">
+    
+                    <div class="field is-horizontal">
+                      <div class="field-label is-normal">
+                        <label class="label">Producto:</label>
+                      </div>
+                      <div class="field-body">
+                        <div class="select is-primary">
+                          <select formControlName="producto" (ngModelChange)="precio($event)">
+                            <option *ngFor="let item of productos">{{item.nombre}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+    
+                  </div>
+                  <div class="column">
+    
+                    <div class="field is-horizontal">
+                      <div class="field-label is-normal">
+                        <label class="label">Precio:</label>
+                      </div>
+                      <div class="field-body">
+                        <div class="field">
+                          <p class="control">
+                            <input style="background-color: rgb(214, 214, 214);" class="input" type="text" formControlName="precio" readonly>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+    
+    
+                  </div>
+                  <div class="column">
+    
+                    <div class="field is-horizontal">
+                      <div class="field-label is-normal">
+                        <label class="label">Cantidad:</label>
+                      </div>
+                      <div class="field-body">
+                        <div class="field">
+                          <p class="control">
+                            <input class="input" type="number" formControlName="cantidad" (ngModelChange)="getSubTotal()" pattern="[0-9]+">
+                          </p>
+                        </div>
+                      </div>
+                      <div class="field-label is-normal">
+                        Kg
+                      </div>
+                    </div>
+    
+                  </div>
+                  <div class="column">
+    
+                    <div class="field is-horizontal">
+                      <div class="field-label is-normal">
+                        <label class="label">Subtotal:</label>
+                      </div>
+                      <div class="field-body">
+                        <div class="field">
+                          <p class="control">
+                            <input style="background-color: rgb(214, 214, 214);" class="input" type="text" formControlName="subtotal" readonly>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="column">
+                  <button class="button is-info">Agregar producto</button>
+                </div>
+              </div>
+            </form>
+    
+    <!-- Tabla de detalle || Tabla de detalle || Tabla de detalle || Tabla de detalle || Tabla de detalle -->
+    
+            <table class="table" style="margin-top: 50px; width: 100%;">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Producto</th>
+                  <th>Precio</th>
+                  <th>Cantidad</th>
+                  <th>Subtotal</th>
+                  <th>Borrar</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>Total</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>{{getTotalCost()}}</th>
+                  <th></th>
+                </tr>
+              </tfoot>
+              <tbody>
+                <tr *ngFor="let item of pedidos; let i = index">
+                  <th>{{i + 1}}</th>
+                  <td>{{item.producto}}</td>
+                  <td>{{item.precio}}</td>
+                  <td>{{item.cantidad}}</td>
+                  <td>{{(item.cantidad || 0) * (item.precio || 0)}}</td>
+                  <td>
+                    <button mat-icon-button style="color: red;" aria-label="Eliminar" (click)="borrarFila(i)">
+                      <mat-icon>clear</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+    
+          </div>
+        </div>
+    </div>
+    <div class="hero-foot has-text-centered">
+      <button *ngIf="pedidos.length > 0" class="button is-danger" style="margin-bottom: 20px;" (click)="realizarPedido()" >
+        Hacer Pedido
+      </button>
+    </div>
+  
+  </section>

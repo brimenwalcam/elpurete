@@ -1,0 +1,29 @@
+<section class="hero is-large" style="background-color: darkturquoise; min-height: 100%;">
+    <div class="box caja">
+        <div class="content has-text-centered">
+            <p class="title">
+                Verduleria El Purete
+            </p>
+            <p class="subtitle">
+                Tu Enlace de Pago
+            </p>
+            <ngx-qrcode
+                [value]="urlPago"
+                [width]=300>
+            </ngx-qrcode>
+            <div class="columns">
+                <div class="column">
+                    <div class="button is-success is-fullwidth" (click)="pagar()">
+                        Pagar ahora
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="button is-danger is-fullwidth is-outlined" (click)="cancelar()">
+                        Cancelar
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
